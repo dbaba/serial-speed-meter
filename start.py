@@ -81,7 +81,7 @@ class SerialPort:
         termios.tcsetattr(self.fd, termios.TCSANOW, attrs)
 
     def read_async(self):
-        n = os.read(self.fd, 1)
+        n = os.read(self.fd, 100)
         if n != '':
             return bytearray(n)
         return None;
@@ -142,6 +142,7 @@ class Sampler:
             b = self.serial.read_async()
             if b != None:
                 self.count = self.count + len(b)
+            time.sleep(0.01)
         self.dump()
 
     def dump(self):
